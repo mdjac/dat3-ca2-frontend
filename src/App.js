@@ -9,55 +9,63 @@ import ProtectedScreen from "./screens/ProtectedScreen";
 import Facade from "./facades/loginFacade";
 import AdminScreen from "./screens/AdminScreen";
 import dataFacade from "./facades/dataFacade";
+import CarScreen from "./screens/MyProfileScreen";
 //import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-	const [loggedIn, setLoggedIn] = React.useState(Facade.loggedIn());
-	const [user, setUser] = useState();
-	let history = useHistory();
+  const [loggedIn, setLoggedIn] = React.useState(Facade.loggedIn());
+  const [user, setUser] = useState();
+  let history = useHistory();
 
-	const changeLoginStatus = (pageToGo) => {
-		setLoggedIn(!loggedIn);
-		history.push(pageToGo);
-	};
+  const changeLoginStatus = (pageToGo) => {
+    setLoggedIn(!loggedIn);
+    history.push(pageToGo);
+  };
 
-	useEffect(() => {
-		setUser(Facade.getUser);
-		console.log(user);
-	}, [loggedIn, history]);
+  useEffect(() => {
+    setUser(Facade.getUser);
+    console.log(user);
+  }, [loggedIn, history]);
 
-	return (
-		<div className="App">
-			<Nav
-				loggedIn={loggedIn}
-				user={user}
-				changeLoginStatus={changeLoginStatus}
-			/>
+  return (
+    <div className="App">
+      <Nav
+        loggedIn={loggedIn}
+        user={user}
+        changeLoginStatus={changeLoginStatus}
+      />
 
-			<Switch>
-				<Route exact path="/">
-					<Home user={user} />
-				</Route>
+      <Switch>
+        <Route exact path="/">
+          <Home user={user} />
+        </Route>
 
-				<PrivateRoute
-					path="/protected"
-					loggedIn={loggedIn}
-					component={ProtectedScreen}
-					dataFacade={dataFacade}
-				/>
-				<PrivateRoute
-					path="/admin"
-					loggedIn={loggedIn}
-					user={user}
-					component={AdminScreen}
-				/>
+        <PrivateRoute
+          path="/protected"
+          loggedIn={loggedIn}
+          component={ProtectedScreen}
+          dataFacade={dataFacade}
+        />
+        <PrivateRoute
+          path="/admin"
+          loggedIn={loggedIn}
+          user={user}
+          component={AdminScreen}
+        />
+        <PrivateRoute
+          path="/myProfile"
+          loggedIn={loggedIn}
+          user={user}
+          component={CarScreen}
+          dataFacade={dataFacade}
+        />
 
-				<Route path="/login">
-					<Login changeLoginStatus={changeLoginStatus} />
-				</Route>
-			</Switch>
-		</div>
-	);
+        <Route path="/login">
+          <Login changeLoginStatus={changeLoginStatus} />
+        </Route>
+      </Switch>
+    </div>
+  );
 }
 
 export default App;
