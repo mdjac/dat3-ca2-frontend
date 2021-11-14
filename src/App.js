@@ -8,6 +8,7 @@ import Home from "./screens/HomeScreen";
 import ProtectedScreen from "./screens/ProtectedScreen";
 import Facade from "./facades/loginFacade";
 import AdminScreen from "./screens/AdminScreen";
+import dataFacade from "./facades/dataFacade";
 //import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
 					path="/protected"
 					loggedIn={loggedIn}
 					component={ProtectedScreen}
+					dataFacade={dataFacade}
 				/>
 				<PrivateRoute
 					path="/admin"
